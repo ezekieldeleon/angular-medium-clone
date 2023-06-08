@@ -55,5 +55,6 @@ export const redirectAfterDeleteEffect = createEffect(
         router.navigateByUrl('/')
       })
     )
-  }
+  },
+  {dispatch: false, functional: true}
 )
