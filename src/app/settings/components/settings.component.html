@@ -1,0 +1,16 @@
+<ng-container *ngIf="data$ | async as data">
+  <div class="settings-page" *ngIf="currentUser">
+    <div class="container page">
+      <div class="row">
+        <div class="colmd-6 offset-md-3 col-xs-12">
+          <h1 class="text-xs-center">Settings</h1>
+          <mc-backend-error-messages
+            *ngIf="data.backendErrors"
+            [backendErrors]="data.backendErrors"
+          ></mc-backend-error-messages>
+          <form [formGroup]="form" (ngSubmit)="submit()"></form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
