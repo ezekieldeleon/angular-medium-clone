@@ -3,6 +3,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core'
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms'
 import {Store, select} from '@ngrx/store'
 import {Subscription, combineLatest, filter} from 'rxjs'
+import {authActions} from 'src/app/auth/store/actions'
 import {
   selectCurrentUser,
   selectIsSubmitting,
@@ -10,6 +11,7 @@ import {
 } from 'src/app/auth/store/reducers'
 import {BackendErrorMessages} from 'src/app/shared/components/backendErrorMessages/backendErrorMessages.component'
 import {CurrentUserInterface} from 'src/app/shared/types/currentUser.interface'
+import {CurrentUserRequestInterface} from 'src/app/shared/types/currentUserRequest.interface'
 
 @Component({
   selector: 'mc-settings',
@@ -58,5 +60,20 @@ export class SettingsComponent implements OnInit, OnDestroy {
     })
   }
 
-  submit(): void {}
+  submit(): void {
+    if (!this.currentUser) {
+      throw new Error('currentUser is undefined')
+    }
+    const currentUserRequest: CurrentUserRequestInterface = {
+      user: {
+        ...this.currentUser,
+        ...this.form.getRawValue(),
+      },
+    }
+    this.store.dispatch(authActions.updateCurrentUser({currentUserRequest}))
+  }
+
+  logout(): void {
+    console.log('Logout')
+  }
 }
