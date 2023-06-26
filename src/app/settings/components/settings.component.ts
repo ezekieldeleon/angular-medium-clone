@@ -74,6 +74,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    console.log('Logout')
+    this.store.dispatch(authActions.logout())
   }
 }
